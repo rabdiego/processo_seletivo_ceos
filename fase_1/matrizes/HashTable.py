@@ -44,12 +44,12 @@ class HashTable:
         return (idx, found)
     
     
-    def has(self, n : int) -> int:
+    def has(self, n : int) -> bool:
         """Checando se um elemento está presente na tabela"""
-        idx, found = self._get_index_on_list(n)
+        _, found = self._get_index_on_list(n)
         if found >= 0:
-            return (idx, found)
-        return (-1, -1)
+            return True
+        return False
         """
         Em teoria, a operação custaria na ordem de O(c), porém
         na aplicação de uma Hash Table com números aleatórios e uma

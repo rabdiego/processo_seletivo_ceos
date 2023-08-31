@@ -33,20 +33,22 @@ def print_matrix(matrix : list) -> None:
     # O(n) + O(l)*O(c)*O(1) + O(1) => O(n)
 
 
-def find_duplicate_on_matrix(matrix : list, hash_table_size : int = 53) -> bool:
+def change_duplicate_on_matrix(matrix : list, hash_table_size : int = 53) -> None:
     """
-    Função para achar um item duplicado em uma matriz
+    Função para substituir itens duplicados por 0
     """
+    original_idxs = dict()
     ht = HashTable(hash_table_size)  # O(1) em relação ao tamanho da lista
     # Nota: utilizei um número primo, pois pela minha função de disperção, esses números são preferíveis
     # O tamanho do vetor base pode variar para melhor acomodar o custo do algoritmo
-    
-    for line in matrix:  # O(l)
-        for element in line:  # O(c)
+
+    for idx_l, line in enumerate(matrix):  # O(l)
+        for idx_c, element in enumerate(line):  # O(c)
             if ht.has(element):  # O(1) no caso médio
-                return True  # O(1)
+                matrix[idx_l][idx_c] = 0
+                if matrix[original_idxs[element][0]][original_idxs[element][1]] != 0:
+                    matrix[original_idxs[element][0]][original_idxs[element][1]] = 0
             ht.add(element)  # O(1) no caso médio
-    
-    return False  # O(1)
-    # O(l)*O(c)*O(1) + O(1) => O(n) no caso médio
+            original_idxs[element] = (idx_l, idx_c)
+    # O(l)*O(c)*O(1) => O(n) no caso médio
 
