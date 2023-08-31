@@ -44,7 +44,8 @@ def change_duplicate_on_matrix(matrix : list, hash_table_size : int = 53) -> Non
 
     for idx_l, line in enumerate(matrix):  # O(l)
         for idx_c, element in enumerate(line):  # O(c)
-            if ht.has(element):  # O(1) no caso médio
+            _, test = ht.has(element)
+            if test >= 0:  # O(1) no caso médio
                 matrix[idx_l][idx_c] = 0
                 if matrix[original_idxs[element][0]][original_idxs[element][1]] != 0:
                     matrix[original_idxs[element][0]][original_idxs[element][1]] = 0

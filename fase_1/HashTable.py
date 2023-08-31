@@ -30,12 +30,12 @@ class HashTable:
         
         Alternativa ao método .find()
         """
-        for idx, element in enumerate(l):  # O(c), onde c é o número de colunas da matriz
+        for idx, element in enumerate(l):  #  O(n) (pior caso)
             if element == n:  # O(1)
                 return idx  # O(1)
         
         return -1  # O(1)
-        # O(1)*O(1)*O(c) + O(1) => O(c)
+        # O(1)*O(1)*O(n) + O(1) => O(n)
 
     
     def _get_index_on_list(self, n : int) -> int:
@@ -44,12 +44,12 @@ class HashTable:
         return (idx, found)
     
     
-    def has(self, n : int) -> bool:
+    def has(self, n : int) -> int:
         """Checando se um elemento está presente na tabela"""
-        _, found = self._get_index_on_list(n)
+        idx, found = self._get_index_on_list(n)
         if found >= 0:
-            return True
-        return False
+            return (idx, found)
+        return (-1, -1)
         """
         Em teoria, a operação custaria na ordem de O(c), porém
         na aplicação de uma Hash Table com números aleatórios e uma

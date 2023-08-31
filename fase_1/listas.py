@@ -61,7 +61,7 @@ def partition_lists(l1 : list, l2 : list) -> None:
                 l1_fix[i_fix], l2_fix[j_fix] = l2_fix[j_fix], l1_fix[i_fix]
             
             if l1_fix[i_fix] <= x: i += 1 
-            if l2_fix[j_fix] > x: j -= 1 
+            if l2_fix[j_fix] >= x: j -= 1 
         
         if j >= n:
             j_fix = j - n
