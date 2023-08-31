@@ -29,8 +29,10 @@ def partition_lists(l1 : list, l2 : list) -> None:
         """
         Função de partição simples, porém aplicada para suportar manipulação em
         duas listas
+
+        Todos comandos não comentados com sua complexidade são O(1), para facilitar a leitura.
         """
-        n = len(l1)
+        n = len(l1)  # O(1)/O(n)
 
         if start >= n:
             relative_start = start - n
@@ -44,7 +46,7 @@ def partition_lists(l1 : list, l2 : list) -> None:
 
         i_fix, j_fix = 0, 0
         l1_fix, l2_fix = list(), list()
-        while i <= j:
+        while i <= j:  # O(n)
             if i >= n:
                 i_fix, j_fix = i - n, j - n
                 l1_fix, l2_fix = l2, l2
@@ -68,11 +70,21 @@ def partition_lists(l1 : list, l2 : list) -> None:
             l_final[relative_start], l1[j] = l1[j], l_final[relative_start]
         
         return j
+        # O(n)
 
-    n = len(l1)
-    i, j = 0, 2*n - 1
-    k, goal = 0, n
+    n = len(l1)  # O(1)/O(n)
+    i, j = 0, 2*n - 1  # O(1)
+    k, goal = 0, n  # O(1)
 
+    """
+    No código abaixo, como realizo o algoritmo de QuickSelect (semelhante ao
+    QuickSort), que possui complexidade média O(n)
+
+    O QuickSelect consegue achar o k-ésimo maior/menor elemento, nesse caso,
+    a variável goal representa o índice n, ou seja, o elemento no meio de ambas as listas.
+    Logo, o algoritmo manipulará ambas as listas até que o n-ésimo maior elemento fique
+    na metade de ambas as listas.
+    """
     while k != goal:
         k = simple_partition(l1, l2, i, j)
         if k > goal:
@@ -85,16 +97,18 @@ def are_lists_permutations(l1 : list, l2 : list) -> bool:
     """
     Função para checar se duas listas são permutações entre elas
     """
-    ht = HashTable(53)
+    ht = HashTable(53)  # O(1) em relação ao tamanho da lista
 
-    for element in l1:
+    for element in l1:  # O(n)
         ht.add(element)
     
-    for element in l2:
-        if ht.has(element):
-            ht.delete(element)
+    for element in l2:  # O(n)
+        idx, found = ht.has(element)  # O(1) médio
+        if idx >= 0:  # O(1)
+            ht.delete(idx, found)  # O(1)
         else:
             return False
     
     return True
+    # O(n) + O(n) => O(n)
 

@@ -44,12 +44,12 @@ class HashTable:
         return (idx, found)
     
     
-    def has(self, n : int) -> bool:
+    def has(self, n : int) -> int:
         """Checando se um elemento está presente na tabela"""
-        _, found = self._get_index_on_list(n)
+        idx, found = self._get_index_on_list(n)
         if found >= 0:
-            return True
-        return False
+            return (idx, found)
+        return (-1, -1)
         """
         Em teoria, a operação custaria na ordem de O(c), porém
         na aplicação de uma Hash Table com números aleatórios e uma
@@ -57,9 +57,7 @@ class HashTable:
         """
 
 
-    def delete(self, n : int) -> None:
+    def delete(self, idx_base : int, idx_list : int) -> None:
         """Deletando um elemento presente no HashTable"""
-        idx, found = self._get_index_on_list(n)
-        if found >= 0:
-            self.base[idx].pop(found)
-        # Mesmo custo de checar se um elemento está na tabela
+        self.base[idx_base].pop(idx_list)
+        # O(1)
