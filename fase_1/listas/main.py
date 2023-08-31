@@ -1,6 +1,12 @@
+from HashTable import HashTable
+
 def third_biggest_element(l : list) -> int:
-    big, sec_big, third_big = float('-inf'), float('-inf'), float('-inf')
-    for element in l:
+    """
+    Função para retornar o terceiro maior elemento de uma lista
+    """
+    big, sec_big, third_big = float('-inf'), float('-inf'), float('-inf')  # O(1)
+    for element in l:  # O(n)
+        # Todas as operações abaixos são O(1)
         if element > big:
             third_big = sec_big
             sec_big = big
@@ -11,10 +17,19 @@ def third_biggest_element(l : list) -> int:
         elif element > third_big:
             third_big = element
     return third_big
+    # O(1)*O(n) => O(n)
 
 
 def partition_lists(l1 : list, l2 : list) -> None:
+    """
+    Função para particionar duas listas, da forma que todos os elementos
+    da primeira sejam menores ou iguais que o menor elemento da segunda
+    """
     def simple_partition(l1: list, l2 : list, start, finish) -> int:
+        """
+        Função de partição simples, porém aplicada para suportar manipulação em
+        duas listas
+        """
         n = len(l1)
 
         if start >= n:
@@ -66,8 +81,20 @@ def partition_lists(l1 : list, l2 : list) -> None:
             i, j = k + 1, 2*n - 1
 
 
-l1 = [26, 3, 32, 10, 37, 15, 31, 7, 42, 6, 23, 50, 15, 19, 29]
-l2 = [27, 5, 35, 30, 34, 13, 21, 34, 12, 15, 11, 39, 38, 35, 1]
-partition_lists(l1, l2)
-print(l1)
-print(l2)
+def are_lists_permutations(l1 : list, l2 : list) -> bool:
+    """
+    Função para checar se duas listas são permutações entre elas
+    """
+    ht = HashTable(53)
+
+    for element in l1:
+        ht.add(element)
+    
+    for element in l2:
+        if ht.has(element):
+            ht.delete(element)
+        else:
+            return False
+    
+    return True
+
